@@ -27,26 +27,14 @@ jobs:
 
     - name: Update Version
       run: |
-        # Generate compatible version with SemVer
-        BUILD_DATE=$(date +"%Y%m%d")
-        BUILD_TIME=$(date +"%H%M")
-        VERSION="1.0.0-build-${BUILD_DATE}${BUILD_TIME}" # Replacing '+' with '-'
+        # Generate a simple version with date and time
+        VERSION=$(date +"%Y%m%d%H%M")
+        echo "Generated Version: $VERSION"
+        echo "VERSION=${VERSION}" >> $GITHUB_ENV  # Make the version available to the next steps
 
-        echo "Versão Gerada: $VERSION"
-        echo "VERSION=${VERSION}" >> $GITHUB_ENV # Export VERSION to environment
-
-        # Updating the .csproj with new version
+        # Update the .csproj file with the generated version
         sed -i "s/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/g" ${PROJECT_PATH}/poc.aws.services.api.csproj
-        sed -i "s/<FileVersion>.*<\/FileVersion>/<FileVersion>${VERSION}<\/FileVersion>/g" ${PROJECT_PATH}/poc.aws.services.api.csproj
-        sed -i "s/<AssemblyVersion>.*<\/AssemblyVersion>/<AssemblyVersion>${VERSION}<\/AssemblyVersion>/g" ${PROJECT_PATH}/poc.aws.services.api.csproj
-
-    - name: Verify Version Update
-      run: |
-        echo "Verificando atualizações no .csproj..."
-        grep "<Version>${{ env.VERSION }}</Version>" ${PROJECT_PATH}/poc.aws.services.api.csproj
-        grep "<FileVersion>${{ env.VERSION }}</FileVersion>" ${PROJECT_PATH}/poc.aws.services.api.csproj
-        grep "<AssemblyVersion>${{ env.VERSION }}</AssemblyVersion>" ${PROJECT_PATH}/poc.aws.services.api.csproj
-
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -67,7 +55,7 @@ jobs:
     - name: Zip Package
       run: |
           cd ${{ github.workspace }}/out
-          zip -qr ${{ github.workspace }}/out.zip *
+          zip -r ${{ github.workspace }}/out.zip *
           
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v22
@@ -76,7 +64,7 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: poc.aws.services.api
         environment_name: Pocawsservicesapi-env 
-        version_label: ${{ env.VERSION }}
+        version_label: "deploy-${{ github.run_id }}-${{ github.run_number }}"
         region: sa-east-1
         deployment_package: ${{ github.workspace }}/out.zip
 
