@@ -27,13 +27,17 @@ jobs:
 
     - name: Update Version
       run: |
-        # Generate a simple version with date and time
-        VERSION=$(date +"%Y%m%d%H%M")
+        # Generate a valid version with date and time (in SemVer format)
+        BUILD_DATE=$(date +"%Y%m%d")
+        BUILD_TIME=$(date +"%H%M")
+        VERSION="1.0.0-${BUILD_DATE}${BUILD_TIME}"  # Version format: 1.0.0-YYYYMMDDHHMM
+
         echo "Generated Version: $VERSION"
-        echo "VERSION=${VERSION}" >> $GITHUB_ENV  # Make the version available to the next steps
+        echo "VERSION=${VERSION}" >> $GITHUB_ENV  # Export VERSION to environment variable
 
         # Update the .csproj file with the generated version
         sed -i "s/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/g" ${PROJECT_PATH}/poc.aws.services.api.csproj
+    
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
