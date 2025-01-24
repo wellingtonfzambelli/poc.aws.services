@@ -1,9 +1,7 @@
-using System.Reflection;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.0.0";
+var version = Environment.GetEnvironmentVariable("VERSION") ?? "1.0.0";
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
