@@ -27,10 +27,10 @@ jobs:
 
     - name: Update Version
       run: |
-        # Generate a valid version with date and time (in SemVer format)
+        # Generate a valid version for Assembly (SemVer format with revision)
         BUILD_DATE=$(date +"%Y%m%d")
         BUILD_TIME=$(date +"%H%M")
-        VERSION="1.0.0-${BUILD_DATE}${BUILD_TIME}"  # Version format: 1.0.0-YYYYMMDDHHMM
+        VERSION="1.0.${BUILD_DATE}.${BUILD_TIME}"  # Version format: 1.0.YYYYMMDD.HHMM
 
         echo "Generated Version: $VERSION"
         echo "VERSION=${VERSION}" >> $GITHUB_ENV  # Export VERSION to environment variable
