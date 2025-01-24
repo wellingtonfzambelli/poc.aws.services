@@ -66,7 +66,7 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: poc.aws.services.api
         environment_name: Pocawsservicesapi-env 
-        version_label: 12345
+        version_label: "deploy-${{ github.run_id }}-${{ github.run_number }}"
         region: sa-east-1
         deployment_package: ${{ github.workspace }}/out.zip
 
