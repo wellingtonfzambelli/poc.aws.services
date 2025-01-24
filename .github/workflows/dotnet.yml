@@ -27,14 +27,14 @@ jobs:
 
     - name: Update Version
       run: |
-        # Gerar versão compatível com SemVer
+        # Generate compatible version with SemVer
         BUILD_DATE=$(date +"%Y%m%d")
         BUILD_TIME=$(date +"%H%M")
-        VERSION="1.0.0+${BUILD_DATE}${BUILD_TIME}" # Adicionando metadata com '+'
+        VERSION="1.0.0+${BUILD_DATE}${BUILD_TIME}" # Adding metadata with '+'
 
         echo "Generated Version: $VERSION"
 
-        # Atualizar o .csproj com a nova versão
+        # Updating the .csproj with new version
         sed -i "s/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/g" ${PROJECT_PATH}/poc.aws.services.api.csproj
     
     - name: Setup .NET
