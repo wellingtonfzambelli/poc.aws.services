@@ -30,9 +30,10 @@ jobs:
         # Generate compatible version with SemVer
         BUILD_DATE=$(date +"%Y%m%d")
         BUILD_TIME=$(date +"%H%M")
-        VERSION="1.0.0+${BUILD_DATE}${BUILD_TIME}" # Adding metadata with '+'
+        VERSION="1.0.0-build-${BUILD_DATE}${BUILD_TIME}" # Replacing '+' with '-'
 
         echo "Generated Version: $VERSION"
+        echo "VERSION=${VERSION}" >> $GITHUB_ENV # Export VERSION to environment
 
         # Updating the .csproj with new version
         sed -i "s/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/g" ${PROJECT_PATH}/poc.aws.services.api.csproj
@@ -57,7 +58,7 @@ jobs:
     - name: Zip Package
       run: |
           cd ${{ github.workspace }}/out
-          zip -r ${{ github.workspace }}/out.zip *
+          zip -qr ${{ github.workspace }}/out.zip *
           
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v22
@@ -66,7 +67,7 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: poc.aws.services.api
         environment_name: Pocawsservicesapi-env 
-        version_label: "deploy-${{ github.run_id }}-${{ github.run_number }}"
+        version_label: ${{ env.VERSION }}
         region: sa-east-1
         deployment_package: ${{ github.workspace }}/out.zip
 
