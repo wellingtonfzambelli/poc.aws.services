@@ -25,19 +25,15 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Update Version
+    - name: Update Environment Variable
       run: |
-        # Generate a valid version for Assembly (SemVer format with revision)
+        # Generate a custom version
         BUILD_DATE=$(date +"%Y%m%d")
         BUILD_TIME=$(date +"%H%M")
-        VERSION="1.0.${BUILD_DATE}.${BUILD_TIME}"  # Version format: 1.0.YYYYMMDD.HHMM
+        VERSION="1.0.0-${BUILD_DATE}${BUILD_TIME}"  # Version format: 1.0.0-YYYYMMDDHHMM
 
         echo "Generated Version: $VERSION"
         echo "VERSION=${VERSION}" >> $GITHUB_ENV  # Export VERSION to environment variable
-
-        # Update the .csproj file with the generated version
-        sed -i "s/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/g" ${PROJECT_PATH}/poc.aws.services.api.csproj
-    
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
