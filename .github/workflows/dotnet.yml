@@ -22,7 +22,14 @@ jobs:
       PROJECT_PATH: ./poc.aws.services.api
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Update Version
+      run: |
+        VERSION=$(date +"%Y%m%d%H%M")
+        echo "Version: $VERSION"
+        sed -i "s/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/g" ${PROJECT_PATH}/poc.aws.services.api.csproj
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
