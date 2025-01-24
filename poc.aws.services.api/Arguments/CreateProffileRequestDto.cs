@@ -6,4 +6,4 @@ public sealed record CreateProffileRequestDto
     string surname, 
     DateTime birth, 
     byte[] profileImage
-);
+); 
