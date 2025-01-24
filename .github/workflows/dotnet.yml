@@ -38,6 +38,11 @@ jobs:
         # Updating the .csproj with new version
         sed -i "s/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/g" ${PROJECT_PATH}/poc.aws.services.api.csproj
     
+    - name: Verify Version Update
+      run: |
+        echo "Verifying updated version in .csproj..."
+        grep "<Version>${{ env.VERSION }}</Version>" ${PROJECT_PATH}/poc.aws.services.api.csproj
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
