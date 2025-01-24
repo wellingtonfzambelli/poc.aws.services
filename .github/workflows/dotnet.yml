@@ -24,17 +24,7 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
-
-    - name: Update Environment Variable
-      run: |
-        # Generate a custom version
-        BUILD_DATE=$(date +"%Y%m%d")
-        BUILD_TIME=$(date +"%H%M")
-        VERSION="1.0.0-${BUILD_DATE}${BUILD_TIME}"  # Version format: 1.0.0-YYYYMMDDHHMM
-
-        echo "Generated Version: $VERSION"
-        echo "VERSION=${VERSION}" >> $GITHUB_ENV  # Export VERSION to environment variable
-    
+      
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -67,5 +57,3 @@ jobs:
         version_label: "deploy-${{ github.run_id }}-${{ github.run_number }}"
         region: sa-east-1
         deployment_package: ${{ github.workspace }}/out.zip
-        environment_variables: |
-          VERSION=${{ env.VERSION }}

@@ -6,12 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>65cea91e-dc15-4064-aa7c-ab3d2406be4d</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-
-    <!-- Setting up to increment the version automatically -->
-    <Version>1.0.0</Version>
-    <FileVersion>1.0.0.0</FileVersion>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
