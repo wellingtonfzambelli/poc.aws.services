@@ -1,3 +1,22 @@
+# About
+
+<br /><br /><br /><br />
+
+
+
+
+# Stacks of this project
+- .NET 8   
+- Dapper   
+- Postgres with PgAdmin
+- Docker _(Docker Compose)_
+- Swagger   
+- Visual Studio 2022   
+<br /><br /><br /><br />
+
+
+
+
 # Solution Architecture
 
 ![image](https://github.com/user-attachments/assets/2892670d-009d-4bc5-a7f8-928bfbff53ff)
