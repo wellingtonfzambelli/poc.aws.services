@@ -2,8 +2,7 @@
 
 public sealed record CreateProffileRequestDto
 (
-    string name, 
-    string surname, 
-    DateTime birth, 
-    byte[] profileImage
-); 
+    string name,
+    string email
+//byte[]? profileImage
+);
