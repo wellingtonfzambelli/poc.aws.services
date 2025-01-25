@@ -33,3 +33,9 @@ Run the new workflow
 
 Running .NET Api with AWS Elastic Beanstalk
 ![image](https://github.com/user-attachments/assets/9f889637-5500-4f82-92c7-4457e88fd549)
+
+
+# Creating AWS Api Gateway
+Go to AWS and create a new Api Gateway
+![image](https://github.com/user-attachments/assets/89cd96c1-0e46-4e76-9ffd-fc3a09121100)
+
