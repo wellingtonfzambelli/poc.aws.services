@@ -28,17 +28,15 @@ public sealed class ProfileRepository : IProfileRepository
                     (
                         name, 
                         email,                         
-                        isActive,
-                        photoId,
-                        createdat
+                        isactive,
+                        photoid
                     ) 
                     VALUES 
                     (
-                        @Name, 
-                        @Email, 
-                        @IsActive, 
-                        @PhotoId,                         
-                        @CreatedAt
+                        @Name,
+                        @Email,
+                        @IsActive,
+                        @PhotoId
                     )";
 
         return await _connection.ExecuteAsync(

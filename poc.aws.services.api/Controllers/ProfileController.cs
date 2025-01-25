@@ -36,20 +36,15 @@ public sealed class ProfileController : ControllerBase
         CancellationToken ct
     )
     {
-        var profile = new Profile
-        {
-            Id = Guid.NewGuid(),
-            Email = request.email,
-            CreatedAt = DateTime.Now,
-            IsActive = true,
-            Name = request.name,
-            PhotoId = "8383"
-        };
+        var profile = new Profile(request.name, request.email, Guid.NewGuid().ToString());
 
         if (await _unitOfWork.Profiles.AddAsync(profile)
             is var created && created > 0)
-            return BadRequest();
+        {
+            _unitOfWork.Commit();
+            return Created();
+        }
 
-        return Created();
+        return BadRequest("ok");
     }
 }
