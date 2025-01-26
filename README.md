@@ -57,6 +57,24 @@ Running .NET Api with AWS Elastic Beanstalk
 
 
 
+# Setup - S3 Bucket
+Go to AWS and create a new S3 Bucket
+![image](https://github.com/user-attachments/assets/5b213ba2-68f7-467c-8f47-ef93378fab58)
+<br />
+
+Create a new one
+![image](https://github.com/user-attachments/assets/61a887f6-69fc-4902-9732-5182fecd670b)
+<br />
+
+The S3 Bucket will be created in few seconds
+![image](https://github.com/user-attachments/assets/62ebce9a-343b-4e0e-b68d-b10c3446e0bb)
+
+
+<br /><br /><br /><br />
+
+
+
+
 # Creating AWS Api Gateway
 Go to AWS and create a new Api Gateway
 ![image](https://github.com/user-attachments/assets/89cd96c1-0e46-4e76-9ffd-fc3a09121100)
