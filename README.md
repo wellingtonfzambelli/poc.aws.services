@@ -82,6 +82,9 @@ Go to AWS and find the RDS
 Create the new one
 ![image](https://github.com/user-attachments/assets/22c879e5-39ea-401e-8072-1fec089be8a4)
 
+In few minutes the RDS is created
+![image](https://github.com/user-attachments/assets/3f6bf7e8-7143-408e-a4c0-4fa267f49644)
+
 
 <br /><br /><br /><br />
 
