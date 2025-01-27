@@ -12,6 +12,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IProfileService, ProfileService>();
 builder.Services.AddTransient<IAwsSQSService, AwsSQSService>();
 builder.Services.AddTransient<IAwsS3Service, AwsS3Service>();
+builder.Services.AddHealthCheckConfiguration(builder);
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -46,4 +47,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.AddHealthCheckMap();
+
 app.Run();
