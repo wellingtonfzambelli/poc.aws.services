@@ -7,7 +7,7 @@
 
 # Solution Architecture
 
-![image](https://github.com/user-attachments/assets/2892670d-009d-4bc5-a7f8-928bfbff53ff)
+![image](https://github.com/user-attachments/assets/870a3549-9e31-416b-aa60-12caac3d62b1)
 <br /><br /><br /><br />
 
 
