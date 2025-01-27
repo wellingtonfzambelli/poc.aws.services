@@ -20,7 +20,7 @@ public sealed class ProfileController : ControllerBase
     [HttpGet("{profileId}")]
     public async Task<IActionResult> GetProfileByIdAsync(Guid profileId, CancellationToken ct)
     {
-        if (await _profileService.GetProfileByIdAsync(profileId)
+        if (await _profileService.GetProfileByIdAsync(profileId, ct)
             is var profile && profile is null)
             return NotFound();
 
