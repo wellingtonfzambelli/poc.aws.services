@@ -7,7 +7,7 @@
 
 # Solution Architecture
 
-![image](https://github.com/user-attachments/assets/2892670d-009d-4bc5-a7f8-928bfbff53ff)
+![image](https://github.com/user-attachments/assets/870a3549-9e31-416b-aa60-12caac3d62b1)
 <br /><br /><br /><br />
 
 
@@ -52,6 +52,24 @@ Run the new workflow
 
 Running .NET Api with AWS Elastic Beanstalk
 ![image](https://github.com/user-attachments/assets/9f889637-5500-4f82-92c7-4457e88fd549)
+<br /><br /><br /><br />
+
+
+
+
+# Setup - S3 Bucket
+Go to AWS and create a new S3 Bucket
+![image](https://github.com/user-attachments/assets/5b213ba2-68f7-467c-8f47-ef93378fab58)
+<br />
+
+Create a new one
+![image](https://github.com/user-attachments/assets/61a887f6-69fc-4902-9732-5182fecd670b)
+<br />
+
+The S3 Bucket will be created in few seconds
+![image](https://github.com/user-attachments/assets/62ebce9a-343b-4e0e-b68d-b10c3446e0bb)
+
+
 <br /><br /><br /><br />
 
 
