@@ -1,4 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
+using poc.aws.services.api.Arguments;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace poc.aws.services.api.Filters;
@@ -7,18 +8,22 @@ public class FileUploadOperationFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        var fileParameters = context.ApiDescription.ParameterDescriptions
-            .Where(p => p.ParameterDescriptor.ParameterType == typeof(IFormFile));
+        var hasFile = context.MethodInfo
+            .GetParameters()
+            .Any(p => p.ParameterType == typeof(CreateProfileRequestDto));
 
-        foreach (var parameter in fileParameters)
+        if (hasFile)
         {
-            var fileParameter = operation.Parameters.FirstOrDefault(p => p.Name == parameter.Name);
-            if (fileParameter != null)
+            operation.RequestBody = new OpenApiRequestBody
             {
-                fileParameter.Schema.Type = "string";
-                fileParameter.Schema.Format = "binary";
-                fileParameter.Description = "Upload image file";
-            }
+                Content = new Dictionary<string, OpenApiMediaType>
+                {
+                    ["multipart/form-data"] = new OpenApiMediaType
+                    {
+                        Schema = context.SchemaGenerator.GenerateSchema(typeof(CreateProfileRequestDto), context.SchemaRepository)
+                    }
+                }
+            };
         }
     }
 }

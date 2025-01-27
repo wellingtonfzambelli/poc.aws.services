@@ -15,14 +15,14 @@ public sealed class ProfileRepository : IProfileRepository
         _transaction = transaction;
     }
 
-    public async Task<Profile?> GetByIdAsync(Guid id) =>
-      (await _connection.QueryAsync<Profile>(
+    public async Task<UserProfile?> GetByIdAsync(Guid id) =>
+      (await _connection.QueryAsync<UserProfile>(
           "SELECT * FROM profile WHERE id = @id LIMIT 1",
           new { id },
           transaction: _transaction
       )).FirstOrDefault();
 
-    public async Task<int> AddAsync(Profile profile)
+    public async Task<int> AddAsync(UserProfile profile)
     {
         var sql = @"INSERT INTO profile
                     (

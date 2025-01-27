@@ -1,10 +1,18 @@
 using poc.aws.services.api.Configuration;
+using poc.aws.services.api.Filters;
 using poc.aws.services.api.Repository.UnitOfWork;
+using poc.aws.services.api.Services;
+using poc.aws.services.api.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDapperConfiguration(builder);
+builder.Services.AddS3Configuration(builder);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IProfileService, ProfileService>();
+builder.Services.AddTransient<IAwsSQSService, AwsSQSService>();
+builder.Services.AddTransient<IAwsS3Service, AwsS3Service>();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -12,7 +20,8 @@ builder.Services.AddSwaggerGen(c =>
         Title = "POC AWS Services Api"
     });
 
-    //c.OperationFilter<FileUploadOperationFilter>();
+    // Enable support multipart/form-data
+    c.OperationFilter<FileUploadOperationFilter>();
 });
 
 builder.Services.AddControllers();

@@ -1,8 +1,10 @@
 ﻿namespace poc.aws.services.api.Domain;
 
-public sealed class Profile
+public sealed class UserProfile
 {
-    public Profile(string name, string email, string photoId)
+    public UserProfile() { }
+
+    public UserProfile(string name, string email, string photoId)
     {
         Name = name;
         Email = email;

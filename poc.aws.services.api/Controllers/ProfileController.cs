@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using poc.aws.services.api.Arguments;
-using poc.aws.services.api.Domain;
-using poc.aws.services.api.Repository.UnitOfWork;
+using poc.aws.services.api.Services.Interfaces;
 
 namespace poc.aws.services.api.Controllers;
 
@@ -9,19 +8,19 @@ namespace poc.aws.services.api.Controllers;
 [Route("profile")]
 public sealed class ProfileController : ControllerBase
 {
+    private readonly IProfileService _profileService;
     private readonly ILogger<ProfileController> _logger;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public ProfileController(IUnitOfWork unitOfWork, ILogger<ProfileController> logger)
+    public ProfileController(IProfileService profileService, ILogger<ProfileController> logger)
     {
-        _unitOfWork = unitOfWork;
+        _profileService = profileService;
         _logger = logger;
     }
 
     [HttpGet("{profileId}")]
     public async Task<IActionResult> GetProfileByIdAsync(Guid profileId, CancellationToken ct)
     {
-        if (await _unitOfWork.Profiles.GetByIdAsync(profileId)
+        if (await _profileService.GetProfileByIdAsync(profileId)
             is var profile && profile is null)
             return NotFound();
 
@@ -29,22 +28,38 @@ public sealed class ProfileController : ControllerBase
     }
 
     [HttpPost]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> CreateProfileAsync
     (
-        [FromBody] CreateProffileRequestDto request,
-        //[FromForm] IFormFile file, 
+        [FromForm] CreateProfileRequestDto request,
         CancellationToken ct
     )
     {
-        var profile = new Profile(request.name, request.email, Guid.NewGuid().ToString());
+        if (request.ProfileImage is null)
+            return BadRequest("image is required");
 
-        if (await _unitOfWork.Profiles.AddAsync(profile)
-            is var created && created > 0)
+        if (ValidateImageFile(request.ProfileImage) is var formatValid && formatValid is not null)
+            return BadRequest(formatValid.ToString());
+
+        await _profileService.CreateProfileAsync(request, ct);
+
+        return Created();
+    }
+
+    private string? ValidateImageFile(IFormFile file)
+    {
+        // Check the MIME type of the file
+        var validImageTypes = new[] { "image/jpeg", "image/png", "image/gif" };
+        if (!validImageTypes.Contains(file.ContentType))
+            return "Only image files (JPEG, PNG, GIF) are allowed.";
+
+        var validExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+        var fileExtension = Path.GetExtension(file.FileName);
+        if (!validExtensions.Contains(fileExtension.ToLower()))
         {
-            _unitOfWork.Commit();
-            return Created();
+            return "Invalid file extension. Only JPG, JPEG, PNG, and GIF are allowed.";
         }
 
-        return BadRequest("ok");
+        return null; // Valid file
     }
 }
