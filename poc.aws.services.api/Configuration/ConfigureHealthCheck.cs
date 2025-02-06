@@ -25,6 +25,7 @@ public static class ConfigureHealthCheck
             ResponseWriter = async (context, report) =>
             {
                 context.Response.ContentType = "application/json";
+
                 var response = new
                 {
                     status = report.Status.ToString(),
@@ -35,7 +36,13 @@ public static class ConfigureHealthCheck
                         description = entry.Value.Description
                     })
                 };
-                await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                };
+
+                await context.Response.WriteAsync(JsonSerializer.Serialize(response, options));
             }
         });
 }
